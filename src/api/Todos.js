@@ -14,9 +14,3 @@ export const loadUsers = async () => {
   return data;
  
 }
-
-// loadTodos()
-//   .then(data => console.log(data))
-
-// loadUsers()
-//   .then(data => console.log(data))
