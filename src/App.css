@@ -1,0 +1,64 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  text-align: center;
+
+}
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  
+}
+.btn-load {
+  background: rgba(169, 241, 169, 0.747);
+  height: 100px;
+  width: 200px;
+  border: none;
+  cursor: pointer;
+  font-size: 34px;
+  font-weight: bold;
+}
+.btn-load:hover {
+  background: rgba(142, 202, 142, 0.829);
+}
+.table__head {
+  background-color: rgb(172, 174, 175);
+  font-weight: bold;
+  color: rgb(58, 56, 56);
+}
+.table__row:hover {
+  cursor: pointer;
+ 
+}
+.pending {
+  background: rgba(255, 255, 0, 0.459);
+
+}
+.pending:hover {
+  background: rgba(255, 255, 0, 0.623);
+
+}
+.pending:hover .table__cell:first-child {
+  border-left: 2px solid rgb(172, 174, 175);
+}
+.done:hover .table__cell:first-child {
+  border-left: 2px solid rgb(172, 174, 175);
+}
+.done:hover {
+  background: rgba(0, 128, 0, 0.637);
+
+}
+.done {
+  background: rgba(0, 128, 0, 0.5);
+  
+}
+.table__cell {
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  padding: 10px;
+
+}

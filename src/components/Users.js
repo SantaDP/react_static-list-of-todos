@@ -3,8 +3,9 @@ import React from 'react';
 class Users extends React.Component {
 
   render() {
-    return 
-   
+    return (
+      <td className="table__cell">{this.props.user.name}</td>
+    )
   }
 }
 
