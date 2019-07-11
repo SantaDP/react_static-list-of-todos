@@ -14,22 +14,16 @@ class App extends React.Component {
 
   handleLoadDate = (event) => {
     console.log(event.target.innerText)
-    this.setState(()=> {
-     return{ btnText: 'Loaded...',}
+    this.setState({
+      btnText: 'Loaded...',
     })
 
-    const render = async () => {
+    const renderData = async () => {
       const todos = await loadTodos();
       const users = await loadUsers();
-      this.setState (()=>{
-        return {
-          todos: todos,
-          users: users,
-        }
-       });
-    }
-    setTimeout(render, 1500)
-    
+      this.setState ({ todos, users})
+    } 
+    setTimeout(renderData, 1500); 
   }
 
   render(){
