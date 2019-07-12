@@ -5,20 +5,16 @@ const TodoItem = ({user, todo}) => {
   return (
     <>
       <tr 
-        className={`table__row ${(todo.completed) ? 'done' : 'pending'}`} 
+        className={ todo.completed ? 'todo-list__tbody-row done' : 'todo-list__tbody-row'} 
       >
-        <td className="table__cell"> {todo.id} </td>
-        <td className="table__cell"> {todo.title} </td>
+        <td className="todo-list__tbody-cell"> {todo.id} </td>
+        <td className="todo-list__tbody-cell"> {todo.title} </td>
         <User user={user} />
-        <td className="table__cell"> {todo.completed ? 'DONE' : 'PENDING'} </td>
-      </tr>
-      
-      
-      
+        <td className="todo-list__tbody-cell"> {todo.completed ? 'DONE' : 'PENDING'} </td>
+      </tr>  
     </>
-    )
+  )
 }
-
 
 export default TodoItem;
 

@@ -1,11 +1,10 @@
 import React from 'react';
 
-const User = ({ user }) => {
-  return (
-    <tr className="user-detalis" >
-      {user.name}
-    </tr>
-  )
-}
+const User = ({ user }) => (
+  <td className="todo-list__tbody-cell" >
+    {user.name}
+  </td>
+)
+
 
 export default User;

@@ -1,70 +1,51 @@
-* {
-  box-sizing: border-box;
-}
 body {
   margin: 0;
-  text-align: center;
-
+  box-sizing: border-box;
 }
-.App {
+
+.todo-list {
   display: flex;
   align-items: center;
-  justify-content: center;
-
-  
+  flex-direction: column;
 }
-.btn-load {
-  background: rgba(169, 241, 169, 0.747);
+.todo-list__button {
   height: 100px;
   width: 200px;
   border: none;
-  cursor: pointer;
-  font-size: 34px;
+  color: white;
+  font-size: 2em;
   font-weight: bold;
-}
-.btn-load:hover {
-  background: rgba(142, 202, 142, 0.829);
-}
-.table__head {
-  background-color: rgb(172, 174, 175);
-  font-weight: bold;
-  color: rgb(58, 56, 56);
-}
-.table__row:hover {
   cursor: pointer;
- 
+  outline: none;
+  background: tomato;
 }
-.pending {
-  background: rgba(255, 255, 0, 0.459);
 
+.todo-list__button:focus {
+  background: rgb(252, 119, 95);
 }
-.pending:hover {
-  background: rgba(255, 255, 0, 0.623);
 
+.todo-list__thead-th {
+  cursor: pointer;
+  border: 1px solid black;
+  padding: 10px 20px;;
 }
-.pending:hover .table__cell:first-child {
-  border-left: 2px solid rgb(172, 174, 175);
-}
-.done:hover .table__cell:first-child {
-  border-left: 2px solid rgb(172, 174, 175);
-}
-.done:hover {
-  background: rgba(0, 128, 0, 0.637);
 
-}
-.done {
-  background: rgba(0, 128, 0, 0.5);
-  
-}
-.table__cell {
-  border-top: 1px solid black;
-  border-right: 1px solid black;
-  padding: 10px;
 
+.active {
+  color: white;
+  background: rgb(124, 124, 245);
+  transition: all 300ms ease;
 }
-.detalis {
-  display: block;
+
+.todo-list__tbody-cell {
+  border-bottom: 1px solid black;
+  padding: 20px;
 }
-.nodetalis {
-  display: none;
+.todo-list__tbody-row.done {
+  text-decoration: line-through;
+}
+
+.todo-list__tbody-row:hover {
+  background: rgba(124, 124, 245, 0.534);
+  color: white;
 }

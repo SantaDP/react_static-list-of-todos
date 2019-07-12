@@ -1,43 +1,96 @@
 import React from 'react';
 import './App.css';
-import TodoList from './components/TodoList';
-import {loadTodos, loadUsers} from './api/Todos'
-
-
+import TodoList, {
+  SORT_ORDER_COMPLETED,
+  SORT_ORDER_USER,
+  SORT_ORDER_TITLE,
+  SORT_ORDER_ID
+} from './components/TodoList';
+import { getTodos, getUsers } from './api/api'
 
 class App extends React.Component {
   state = {
+    sortField: '',
     todos: [],
-    users: [],
-    btnText: 'Load',
+    isLoaded: false,
+    btnText: 'load',
+    visibleTodods: [],
   }
 
-  handleLoadDate = (event) => {
-    console.log(event.target.innerText)
+  loadData = async () => {
+    const [todos, users] = await Promise.all([
+      getTodos(),
+      getUsers()
+    ])
+
+    const todosWithUsers = this.getTodosWithUsers(todos, users);
+
     this.setState({
-      btnText: 'Loaded...',
+      btnText: 'Loading...',
     })
 
-    const renderData = async () => {
-      const todos = await loadTodos();
-      const users = await loadUsers();
-      this.setState ({ todos, users})
-    } 
-    setTimeout(renderData, 1500); 
+    setTimeout(() => {
+      this.setState(prev => {
+        return {
+          visibleTodods: todosWithUsers,
+          isSortedAsc: true,
+          todos: todosWithUsers,
+          isLoaded: true,
+        }
+      })     
+    }, 1500);
+
+    this.handleSort(SORT_ORDER_ID);
+
+  }
+
+  sorTodos(todos, sortField, isSortedAsc = true) {
+    const sign = isSortedAsc ? 1 : -1
+    const callbackMap = {
+      [SORT_ORDER_TITLE]: (a, b) => a.title.localeCompare(b.title) * sign,
+      [SORT_ORDER_USER]: (a, b) => a.user.name.localeCompare(b.user.name) * sign,
+      [SORT_ORDER_COMPLETED]: (a, b) => (a.completed - b.completed) * sign, 
+      [SORT_ORDER_ID]: (a, b) => (a.id - b.id) * sign, 
+    };
+    const callback = callbackMap[sortField] || callbackMap[SORT_ORDER_TITLE]
+    return [...todos].sort(callback);
+  }
+
+  handleSort = (sortField) => {
+    this.setState (prev => {
+      const isSortedAsc = prev.sortField === sortField ? !prev.isSortedAsc : true
+      return { 
+        sortField,
+        visibleTodods: this.sorTodos(prev.todos, sortField, isSortedAsc),
+        isSortedAsc,
+      }
+    });
+  }
+
+  getTodosWithUsers(todos, users) {
+    return todos.map(todo =>({
+      ...todo,
+      user: users.find(user => user.id === todo.userId)
+    }))
   }
 
   render(){
+    const {visibleTodods, isLoaded, btnText, sortField} = this.state;
     return (
-      <div className="App">
-        {
-         this.state.todos.length > 0 ? 
-          (<TodoList 
-          todos = {this.state.todos}
-          users = {this.state.users}
-        />) : 
-        <button className="btn-load" onClick={(event)=>this.handleLoadDate(event)}>{this.state.btnText}</button>
-        }
-        
+      <div className="todo-list">
+        { isLoaded ? (
+          <TodoList 
+          todos = {visibleTodods}
+          onSort={this.handleSort}
+          sortField={sortField}
+          />
+        ) : (
+          <button
+          className="todo-list__button" 
+          onClick={this.loadData}>{btnText}
+          </button>
+        )}
+
       </div>
     );
   } 
